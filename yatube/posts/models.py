@@ -1,13 +1,10 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 
 
 class Post(models.Model):
-    def __str__(self):
-        # выводим текст поста
-        return self.text
     text = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
@@ -21,8 +18,11 @@ class Post(models.Model):
         blank=True,
         null=True)
 
+    def __str__(self):
+        return self.text
+
     class Meta:
-        ordering = ['-pub_date']
+        ordering = ('-pub_date',)
 
 
 class Group(models.Model):
