@@ -107,13 +107,13 @@ def post_edit(request, post_id):
         'is_edit': True,
         'post': post,
     }
-    if post.author == request.user:
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.save()
-            return redirect('posts:post_detail', post_id)
-        return render(request, 'posts/update_post.html', context)
-    return redirect('posts:post_detail', post_id)
+    if post.author != request.user:
+        return redirect('posts:post_detail', post_id)
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.save()
+        return redirect('posts:post_detail', post_id)
+    return render(request, 'posts/update_post.html', context)
 
 
 class JustStaticPage(TemplateView):
