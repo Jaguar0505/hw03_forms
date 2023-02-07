@@ -98,7 +98,7 @@ def post_create(request):
         return redirect('posts:profile', request.user)
     return render(request, 'posts/create_post.html', {'form': form})
 
-
+@login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     form = PostForm(request.POST or None, instance=post)
