@@ -59,6 +59,12 @@ class PostsURLTests(TestCase):
         response = self.post_author.get(
             f'/posts/{PostsURLTests.post.pk}/edit/')
         self.assertEqual(response.status_code, 200)
+        # Не автора редиректит на страницу входа
+
+    def test_post_edit_no_author(self):
+        response = self.guest_client.get(
+            f'/posts/{self.post.id}/edit/')
+        self.assertRedirects(response, '/auth/login/?next=/posts/1/edit/')
 
         # Проверка создания поста авторизированным пользователем
 
