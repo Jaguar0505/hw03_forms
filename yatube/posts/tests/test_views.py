@@ -53,12 +53,15 @@ class PostPagesTests(TestCase):
                 self.assertEqual(response.status_code, 200)
 
 # Проверяем шаблоны на соответствие контексту
+    #index
     def test_index_context(self):
         response = self.authorized_client.get(reverse('posts:index'))
         first_object = response.context['page_obj'][0]
-        post_title=first_object.group.title
+        post_title = first_object.group.title
         post_text = first_object.text
         post_author1 = first_object.author.username
         self.assertEqual(post_title, 'Тестовый заголовок')
         self.assertEqual(post_text, 'Тестовый текст')
         self.assertEqual(post_author1, 'Test')
+    #Group_list
+    def group_list_context(self):
